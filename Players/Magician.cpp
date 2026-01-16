@@ -1,0 +1,26 @@
+#include "Player.h"
+#include "Job.h"
+#include "Character.h"
+#include "../Utilities.h"
+#include <memory>
+#include <string>
+using namespace std;
+
+std::string Magician::getType() const {
+    return "Magician";
+}
+
+int Magician::calculateCombatPower(const Player &player) const {
+    int combatPower = player.getForce() + player.getLevel();
+    return combatPower;
+}
+
+std::string Magician::solarEclipse(Player &player) {
+    int effect = 1 ;
+    player.setForce(effect);
+    return getSolarEclipseMessage(player,effect);
+}
+
+bool Magician::checkIfRnaged() {
+    return true;
+}
