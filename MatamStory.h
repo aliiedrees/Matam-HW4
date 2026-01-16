@@ -5,11 +5,14 @@
 
 #include "Players/Player.h"
 #include "Events/Event.h"
-
+using std::unique_ptr;
 
 class MatamStory{
 private:
     unsigned int m_turnIndex;
+
+    vector<unique_ptr<Event>> eventsQueue;
+    vector<unique_ptr<Player>> playersQueue;
 
     /**
      * Playes a single turn for a player
@@ -34,6 +37,19 @@ private:
     */
     bool isGameOver() const;
 
+    void loadEvents(istream& eventsStream);
+    void loadPlayers(istream& playersStream);
+    
+    vector<unique_ptr<Encounter>> prepareEncounterVector(string line);
+
+    void addSnail();
+    void addSlime();
+    void addBarlog();
+    void addPack(vector<unique_ptr<Encounter>> encounterPack, int size);
+    void addSolarEclipse();
+    void addPotionsMerchant();
+
+    int getRanking(const Player& player) const;
 public:
     /**
      * Constructor of MatamStory class

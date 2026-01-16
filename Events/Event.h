@@ -10,15 +10,16 @@ public:
      * @return - the description of the event
     */
     virtual string getDescription() const;
+    virtual string playEvent(Player& player) const;
 };
 
 class Encounter : public Event {
     
     public:
     virtual ~Encounter() = 0;
-    virtual unsigned int getCombatPower() const;
-    virtual unsigned int getLoot() const;
-    virtual unsigned int getDamage() const;
+    virtual unsigned int getCombatPower() const {this->combatPower;};
+    virtual unsigned int getLoot() const {this->loot;};
+    virtual unsigned int getDamage() const {this->damage;};
     protected:
     unsigned int combatPower;
     unsigned int loot;
@@ -38,9 +39,7 @@ class Snail : public Encounter {
     string getDescription() const override{
         return "Snail (power 5, loot 2, damage 10)";
     }
-    unsigned int getCombatPower() const override{return combatPower;}
-    unsigned int getLoot() const override{return loot;}
-    unsigned int getDamage() const override{return damage;}
+    string playEvent(Player& player) const override;
 };
 
 class Slime : public Encounter {
@@ -53,9 +52,7 @@ class Slime : public Encounter {
     string getDescription() const override{
         return "Slime (power 12, loot 5, damage 25)";
     }
-    unsigned int getCombatPower() const override{return combatPower;}
-    unsigned int getLoot() const override{return loot;}
-    unsigned int getDamage() const override{return damage;}
+    string playEvent(Player& player) const override;
 };
 
 class Barlog : public Encounter {
@@ -68,35 +65,31 @@ class Barlog : public Encounter {
     string getDescription() const override{
         return "Barlog (power 15, loot 100, damage 9001)";
     }
-    unsigned int getCombatPower() const override{return combatPower;}
-    unsigned int getLoot() const override{return loot;}
-    unsigned int getDamage() const override{return damage;}
+    string playEvent(Player& player) const override;
 };
 
 class Pack : public Encounter {
-    Encounter** monsters;
+    vector<unique_ptr<Encounter>> monsters;
     int size;
 
     public:
-    Pack(int size, Encounter** monsters) : size(size), monsters(monsters){}
-    ~Pack(){
-        for (int i = 0; i < size; i++){
-            delete monsters[i];
-        }
-        delete[] monsters;
-    }
+    Pack(int size, vector<unique_ptr<Encounter>> monsters) : size(size), monsters(std::move(monsters)){}
+    ~Pack() = default;
     string getDescription() const override;
     unsigned int getCombatPower() const override;
     unsigned int getLoot() const override;
     unsigned int getDamage() const override;
+    string playEvent(Player& player) const override;
 };
 
 class SolarEclipse : public Event {
     string getDescription() const override{return "SolarEclipse";}
+    string playEvent(Player& player) const override;
 };
 
 class PotionsMerchant : public Event {
     string getDescription() const override{return "PotionsMerchant";}
+    string playEvent(Player& player) const override;
 };
 
 /*
