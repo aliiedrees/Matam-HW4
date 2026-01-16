@@ -5,16 +5,16 @@ class Player;
 class Character {
     string type;
 public:
-   virtual string getType() const;
-    virtual string PotionsMerchant(Player& player);
+    virtual string getType() const;
+    virtual string potionsMerchant(Player& player);
 };
 
-class Responsable :public Character {
-    string PotionsMerchant(Player& player) override;
+class Responsible :public Character {
+    string potionsMerchant(Player& player) override;
     string getType() const override;
 };
 
 class RiskMaker :public Character {
-    string PotionsMerchant(Player& player) override;
+    string potionsMerchant(Player& player) override;
     string getType() const override;
 };

@@ -1,107 +1,18 @@
 #pragma once
-#include "../Players/Player.h"
-
-
-class Event {
-public:
-    /**
-     * Gets the description of the event
-     *
-     * @return - the description of the event
-    */
-    virtual string getDescription() const;
-    virtual string playEvent(Player& player) const;
-};
-
-class Encounter : public Event {
-    
-    public:
-    virtual ~Encounter() = 0;
-    virtual unsigned int getCombatPower() const {this->combatPower;};
-    virtual unsigned int getLoot() const {this->loot;};
-    virtual unsigned int getDamage() const {this->damage;};
-    protected:
-    unsigned int combatPower;
-    unsigned int loot;
-    unsigned int damage;
-    Encounter(unsigned int combatPower, unsigned int loot, unsigned int damage);
-    Encounter() = default;
-};
-
-class Snail : public Encounter {
-    static const unsigned int combatPower = 5;
-    static const unsigned int loot = 2;
-    static const unsigned int damage = 10;
-
-    public:
-    Snail() : Encounter(combatPower, loot, damage){}
-    ~Snail() = default;
-    string getDescription() const override{
-        return "Snail (power 5, loot 2, damage 10)";
-    }
-    string playEvent(Player& player) const override;
-};
-
-class Slime : public Encounter {
-    static const unsigned int combatPower = 12;
-    static const unsigned int loot = 5;
-    static const unsigned int damage = 25;
-    public:
-    Slime() : Encounter(combatPower, loot, damage){}
-    ~Slime() = default;
-    string getDescription() const override{
-        return "Slime (power 12, loot 5, damage 25)";
-    }
-    string playEvent(Player& player) const override;
-};
-
-class Barlog : public Encounter {
-    static const unsigned int combatPower = 15;
-    static const unsigned int loot = 100;
-    static const unsigned int damage = 9001;
-    public:
-    Barlog() : Encounter(combatPower, loot, damage){}
-    ~Barlog() = default;
-    string getDescription() const override{
-        return "Barlog (power 15, loot 100, damage 9001)";
-    }
-    string playEvent(Player& player) const override;
-};
-
-class Pack : public Encounter {
-    vector<unique_ptr<Encounter>> monsters;
-    int size;
-
-    public:
-    Pack(int size, vector<unique_ptr<Encounter>> monsters) : size(size), monsters(std::move(monsters)){}
-    ~Pack() = default;
-    string getDescription() const override;
-    unsigned int getCombatPower() const override;
-    unsigned int getLoot() const override;
-    unsigned int getDamage() const override;
-    string playEvent(Player& player) const override;
-};
-
-class SolarEclipse : public Event {
-    string getDescription() const override{return "SolarEclipse";}
-    string playEvent(Player& player) const override;
-};
-
-class PotionsMerchant : public Event {
-    string getDescription() const override{return "PotionsMerchant";}
-    string playEvent(Player& player) const override;
-};
-
-/*
+#include <string>
+using namespace std;
 class Player;
 class Event {
-
-    public:
+    protected:
     virtual string apply(Player& player);
-    virtual int getCombatPower(Player& player) const;
+    public:
+    virtual string getDescription() const;
+    virtual string applyEvent(Player& player) {return apply(player);}
+    static std::vector<std::unique_ptr<Event>> eventList;
 };
 class Monsters :public Event {
     public:
+    Monsters() = default;
     Monsters(std::string  type , int power,  int loot,  int damage)
         :type(std::move(type)) {
         CombatPower = power;
@@ -114,37 +25,71 @@ class Monsters :public Event {
     virtual int getDamage() const;
     virtual void setCombatPowers(int plus) const;
     virtual string getName() const;
+    virtual bool isPack() const {return false;}
     string type;
     int CombatPower;
     int Loot;
     int Damage;
 };
 class Snail : public Monsters {
+public:
     Snail():Monsters("Snail",5,2,10){}
     string getName() const override;
+    string getDescription() const override{
+        return "Snail (power 5, loot 2, damage 10)";
+    }
 };
 class Slime :public Monsters {
+public:
     Slime():Monsters("Slime",12,5,25){}
     string getName() const override;
+    string getDescription() const override{
+        return "Slime (power 12, loot 5, damage 25)";
+    }
 };
 class Barlog :public Monsters {
-Barlog():Monsters("Balrog",15,100,9001){}
+public:
+    Barlog():Monsters("Balrog",15,100,9001){}
     string getName() const override;
-    void setCombatPowers(int plus) const override;
-    string apply(Player& player) override ;
+    void setCombatPowers(int plus) const override;  
+    string getDescription() const override{
+        return "Barlog (power " + to_string(CombatPower) + ", loot 100, damage 9001)";
+    } 
+    string applyEvent(Player& player) override {
+        string outcome = Monsters::apply(player);
+        this->setCombatPowers(2);
+        return outcome;   
+    }
 };
 class Pack :public Monsters {
-Monsters* monsters;
-    string apply(Player& player) override;
-    int getCombatPower() const override;
-    int getLoot() const override;
-    int getDamage() const override;
+    vector<unique_ptr<Monsters>> monsters;
+    int size;
+
+    public:
+    Pack() = default;
+    string getDescription() const override;
+    string applyEvent(Player& player) override;
     string getName() const override;
+    bool isPack() const override {return true;};
+    void applyBalrogCombatPower(std::vector<std::unique_ptr<Monsters>>& monsters);
+    static std::unique_ptr<Pack> createPack(std::vector<std::unique_ptr<Monsters>> monsters) {
+        auto pack = std::make_unique<Pack>();
+        for (auto& monster : monsters) {
+            pack->addMonster(std::move(monster));
+        }
+        return pack;
+    }
+        void addMonster(std::unique_ptr<Monsters> monster) {
+        monsters.push_back(std::move(monster));
+    }
 };
 class SolarEclipse:public Event {
-    string apply(Player& player) override;
+    string applyEvent(Player& player) override;
+    string getDescription() const override{return "SolarEclipse";}
+
 };
 class PotionsMerchant:public Event {
-    string apply(Player& player) override;
+    string applyEvent(Player& player) override;
+    string getDescription() const override{return "PotionsMerchant";}
 };
-*/
+

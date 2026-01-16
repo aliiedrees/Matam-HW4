@@ -19,8 +19,9 @@ using namespace std;
 }
 */
 string Player::getDescription() const {
- string description = this->Name  + "," + this->Job->getType() + "with" + this->Character->getType() +
+ string description = this->Name  + "," + this->job->getType() + "with" + this->character->getType() +
  "( level" + to_string(this->Level) + ", force" + to_string(this->Force) + " )";
+  return description;
 }
 
 string Player::getName() const {
@@ -54,17 +55,18 @@ return this->Coins;
 void Player::setCoins(int newCoins) {
   this->Coins = newCoins;
 }
-bool Player::operator>(Player& other) {
+/*bool Player::operator>(Player& other) {
  {
-  if (this->getLevel == other.getLevel) {
+  if (this->getLevel() == other.getLevel) {
    if (this->getCoins == other.getCoins) {
     return this->getName < other.getName;
    }
+  int Force
    return this->getCoins > other.getCoins;
   }
   return this->getLevel > other.getLevel;
  }
-};
+};*/
 int Player::getCombatPoawer() const {
- return this->Job->calculateCombatPower(*this);
+ return this->job->calculateCombatPower(*this);
 }

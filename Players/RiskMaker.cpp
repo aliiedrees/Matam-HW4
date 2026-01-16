@@ -10,13 +10,13 @@ string RiskMaker::getType() const {
     return "RiskMaker";
 }
 
-string RiskMaker::PotionsMerchant(Player& player) {
-    int amount = 0;
-    if(player.getHealthPoints() < 50 && player.getCoins() >= 5) {
-        player.setHealthPoints(player.getHealthPoints() + 10);
-        player.setCoins(player.getCoins() - 5);
-        amount++;
+string RiskMaker::potionsMerchant(Player& player) {
+    int currentHP = player.getHealthPoints();
+    int currentCoins = player.getCoins();
+    if (currentHP < 50 && currentCoins > 5){
+        player.setCoins(currentCoins - 5);
+        player.setHealthPoints(currentHP + 10);
+        return getPotionsPurchaseMessage(player, 1);
     }
-   return getPotionsPurchaseMessage(player,amount);
 }
 

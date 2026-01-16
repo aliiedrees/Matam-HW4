@@ -2,18 +2,27 @@
 #pragma once
 
 #include <iostream>
-
+#include "Events/EventFactory.h"
 #include "Players/Player.h"
 #include "Events/Event.h"
 using std::unique_ptr;
 
 class MatamStory{
 private:
-    unsigned int m_turnIndex;
+   // unsigned int m_turnIndex;
 
-    vector<unique_ptr<Event>> eventsQueue;
-    vector<unique_ptr<Player>> playersQueue;
+   // vector<unique_ptr<Event>> eventsQueue;
+    //vector<unique_ptr<Player>> playersQueue;
+    EventFactory eventFactory; // Map of events
+     unsigned int m_turnIndex;
+ /**
+     * Create a sorted leaderboard
+     *
+     * @return - std::set of players references
+    */
 
+    //std::set<Player *> createLeaderBoard(const std::vector<std::unique_ptr<Player>> &players);
+    std::vector<Player*>createLeaderBoard(const std::vector<std::unique_ptr<Player>>& players);
     /**
      * Playes a single turn for a player
      *
@@ -36,7 +45,7 @@ private:
      * @return - true if the game is over, false otherwise
     */
     bool isGameOver() const;
-
+/*
     void loadEvents(istream& eventsStream);
     void loadPlayers(istream& playersStream);
     
@@ -49,7 +58,7 @@ private:
     void addSolarEclipse();
     void addPotionsMerchant();
 
-    int getRanking(const Player& player) const;
+    int getRanking(const Player& player) const;*/
 public:
     /**
      * Constructor of MatamStory class
