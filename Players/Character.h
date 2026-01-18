@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
 using namespace std;
-class Player;
+#include "Player.h"
+
 class Character {
     string type;
 public:

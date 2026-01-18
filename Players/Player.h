@@ -14,30 +14,30 @@ using JobLambda = unique_ptr<Job>(*)();
 using CharacterLambda = unique_ptr<Character>(*)();
 class Player {
     string name;
-    int Level = 1;
-    int Force = 5;
-    int CurrentHp = 100;
-    int MaxHp = 100;
-    int Coins = 10;
+    int level = 1;
+    int force = 5;
+    int currentHp = 100;
+    int maxHp = 100;
+    int coins = 10;
     bool alive = true;
     unique_ptr<Character> character;
     unique_ptr<Job> job;
 
 public:
-    int getCombatPoawer() const;
+    int getCombatPower() const;
     string getDescription() const;
     string getName() const;
-    const unique_ptr<Character> getCharacter() const;
-    const unique_ptr<Job> getJob() const;
+    const unique_ptr<Character>& getCharacter() const;
+    const unique_ptr<Job>& getJob() const;
     int getLevel() const;
-    void buffLevel() const;
+    void buffLevel();
     int getForce() const;
     int getHealthPoints() const;
     int getMaxHealthPoints() const;
     int getCoins() const;
     
     void wasted();
-    int setForce();
+    int setForce(int force);
     void setHealthPoints(int newHealthPoints);
     void setCoins(int newCoins);
 };

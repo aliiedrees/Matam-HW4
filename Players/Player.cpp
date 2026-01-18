@@ -19,41 +19,41 @@ using namespace std;
 }
 */
 string Player::getDescription() const {
- string description = this->Name  + "," + this->job->getType() + "with" + this->character->getType() +
- "( level" + to_string(this->Level) + ", force" + to_string(this->Force) + " )";
+ string description = this->name  + "," + this->job->getType() + "with" + this->character->getType() +
+ "( level" + to_string(this->level) + ", force" + to_string(this->force) + " )";
   return description;
 }
 
 string Player::getName() const {
-return this->Name;
+return this->name;
 }
 
 int Player::getLevel() const {
-return this->Level;
+return this->level;
 }
 void Player::buffLevel() {
- this->Level = this->Level + 1;
+ this->level = this->level + 1;
 }
 int Player::getForce() const {
-return this->Force;
+return this->force;
 }
 int Player::setForce(int force) {
- this->Force = this->Force + force;
+ this->force = this->force + force;
 }
 int Player::getHealthPoints() const {
-return this->CurrentHp;
+return this->currentHp;
 }
 int Player::getMaxHealthPoints() const {
- return this->MaxHp;
+ return this->maxHp;
 }
 void Player::setHealthPoints(int newHealthPoints) {
- this->CurrentHp = newHealthPoints;
+ this->currentHp = newHealthPoints;
 }
 int Player::getCoins() const {
-return this->Coins;
+return this->coins;
 }
 void Player::setCoins(int newCoins) {
-  this->Coins = newCoins;
+  this->coins = newCoins;
 }
 /*bool Player::operator>(Player& other) {
  {
@@ -67,6 +67,6 @@ void Player::setCoins(int newCoins) {
   return this->getLevel > other.getLevel;
  }
 };*/
-int Player::getCombatPoawer() const {
+int Player::getCombatPower() const {
  return this->job->calculateCombatPower(*this);
 }
