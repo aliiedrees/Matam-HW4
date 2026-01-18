@@ -14,7 +14,7 @@ private:
    // vector<unique_ptr<Event>> eventsQueue;
     //vector<unique_ptr<Player>> playersQueue;
     EventFactory eventFactory; // Map of events
-     unsigned int m_turnIndex;
+    unsigned int m_turnIndex;
  /**
      * Create a sorted leaderboard
      *

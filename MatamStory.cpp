@@ -8,14 +8,14 @@
 /*
 MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) {
 
-    /*===== TODO: Open and read events file =====
+    ===== TODO: Open and read events file =====
     loadEvents(eventsStream);
-    /*==========================================
+    ==========================================
 
 
-    /*===== TODO: Open and Read players file =====
+    ===== TODO: Open and Read players file =====
     loadPlayers(playersStream);
-    /*============================================
+    ============================================
 
 
     this->m_turnIndex = 1;
@@ -148,7 +148,7 @@ void MatamStory::addPotionsMerchant(){
 
 void MatamStory::playTurn(Player& player) {
 
-    /**
+    *
      * Steps to implement (there may be more, depending on your design):
      * 1. Get the next event from the events list
      * 2. Print the turn details with "printTurnDetails"
@@ -198,12 +198,8 @@ MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) 
     /*===== TODO: Open and Read players file =====*/
 
 	// Validate the number of players
-    PlayerFactory::readPlayers(playersStream);
-
-    if (PlayerFactory::playerList.size() < 2 || PlayerFactory::playerList.size() > 6) {
-      	throw runtime_error("Invalid Players File");
-    }
-    /*============================================*/
+    PlayerFactory::loadPlayers(playersStream);
+    
     this->m_turnIndex = 0;
 }
 
@@ -248,7 +244,7 @@ void MatamStory::playRound() {
     printRoundStart();
 
     /*===== TODO: Play a turn for each player =====*/
-    for (auto& player : PlayerFactory::playerList) {
+    for (auto& player : PlayerFactory::playersQueue) {
         if (player->getHealthPoints() > 0) {
         playTurn(*player);
         }
@@ -261,7 +257,7 @@ void MatamStory::playRound() {
 
     /*===== TODO: Print leaderboard entry for each player using "printLeaderBoardEntry" =====*/
 
-    std::vector<Player*> leaderBoard = createLeaderBoard(PlayerFactory::playerList);
+    std::vector<Player*> leaderBoard = createLeaderBoard(PlayerFactory::playersQueue);
     int i = 1;
     for (auto* player : leaderBoard) {
         printLeaderBoardEntry(i, *player);
@@ -276,13 +272,13 @@ void MatamStory::playRound() {
 bool MatamStory::isGameOver() const {
     /*===== TODO: Implement the game over condition =====*/
     // Check if someone is level 10 (if someone's level 10 he is surely alive)
-    for (auto& player : PlayerFactory::playerList) {
+    for (auto& player : PlayerFactory::playersQueue) {
         if (player->getLevel() == 10) {
             return true;
         }
     }
     // In case nobody is level 10, check if somebody is still alive
-    for (auto& player : PlayerFactory::playerList) {
+    for (auto& player : PlayerFactory::playersQueue) {
         if (player->getHealthPoints() > 0) {
             return false;
         }
@@ -295,8 +291,8 @@ bool MatamStory::isGameOver() const {
 void MatamStory::play() {
     printStartMessage();
     /*===== TODO: Print start message entry for each player using "printStartPlayerEntry" =====*/
-    for (size_t i = 0; i < PlayerFactory::playerList.size(); i++) {
-        printStartPlayerEntry(i + 1, *PlayerFactory::playerList[i]);
+    for (size_t i = 0; i < PlayerFactory::playersQueue.size(); i++) {
+        printStartPlayerEntry(i + 1, *PlayerFactory::playersQueue[i]);
     }
     /*=========================================================================================*/
     printBarrier();
@@ -309,7 +305,7 @@ void MatamStory::play() {
     /*===== TODO: Print either a "winner" message or "no winner" message =====*/
     // Create a leaderboard
     //set<Player*> leaderBoard = createLeaderBoard(PlayerFactory::playerList);
-    std::vector<Player*> leaderBoard = createLeaderBoard(PlayerFactory::playerList);
+    std::vector<Player*> leaderBoard = createLeaderBoard(PlayerFactory::playersQueue);
     // Check if there's a winner
     auto candidate = *leaderBoard.begin();
     if ((*leaderBoard.begin())->getLevel() == 10) {

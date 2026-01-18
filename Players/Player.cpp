@@ -4,56 +4,55 @@
 #include "../Utilities.h"
 #include <memory>
 #include <string>
-#include "Job.h"
-#include "Character.h"
 using namespace std;
-/* Player::Player(std::string name, std::unique_ptr<Job> job, std::unique_ptr<Character> character)
-  : Name(std::move(name)), Job(std::move(job)), Character(std::move(character)) {
- if (this->Job->getType() == "Warrior") {
-  this->MaxHp = 150;
-  CurrentHp = MaxHp;
- }
- else if (this->Job->getType() == "Archer") {
-  this->Coins += 10;
- }
+
+Player::Player(const string name, unique_ptr<Job> job, unique_ptr<Character> character)
+: name(name), job(std::move(job)), character(std::move(character)) {
+  if (this->job->getType() == "Warrior") {
+      maxHp = 150;
+      currentHp = maxHp;
+  }
+  else if (this->job->getType() == "Archer") {
+      coins += 10;
+  }
 }
-*/
+
 string Player::getDescription() const {
- string description = this->Name  + "," + this->job->getType() + "with" + this->character->getType() +
- "( level" + to_string(this->Level) + ", force" + to_string(this->Force) + " )";
+ string description = this->name  + "," + this->job->getType() + "with" + this->character->getType() +
+ "( level" + to_string(this->level) + ", force" + to_string(this->force) + " )";
   return description;
 }
 
 string Player::getName() const {
-return this->Name;
+return this->name;
 }
 
 int Player::getLevel() const {
-return this->Level;
+return this->level;
 }
 void Player::buffLevel() {
- this->Level = this->Level + 1;
+ this->level = this->level + 1;
 }
 int Player::getForce() const {
-return this->Force;
+return this->force;
 }
-int Player::setForce(int force) {
- this->Force = this->Force + force;
+void Player::setForce(int force) {
+ this->force = this->force + force;
 }
 int Player::getHealthPoints() const {
-return this->CurrentHp;
+return this->currentHp;
 }
 int Player::getMaxHealthPoints() const {
- return this->MaxHp;
+ return this->maxHp;
 }
 void Player::setHealthPoints(int newHealthPoints) {
- this->CurrentHp = newHealthPoints;
+ this->currentHp = newHealthPoints;
 }
 int Player::getCoins() const {
-return this->Coins;
+  return this->coins;
 }
 void Player::setCoins(int newCoins) {
-  this->Coins = newCoins;
+  this->coins = newCoins;
 }
 /*bool Player::operator>(Player& other) {
  {
@@ -67,6 +66,16 @@ void Player::setCoins(int newCoins) {
   return this->getLevel > other.getLevel;
  }
 };*/
-int Player::getCombatPoawer() const {
+int Player::getCombatPower() const {
  return this->job->calculateCombatPower(*this);
+}
+
+bool Player::operator<(const Player &other) const {
+  if (this->level == other.level) {
+    if (this->coins == other.coins) {
+      return name < other.name;  // Lexicographically smallest name first
+    }
+    return coins > other.coins;  // Highest force first
+  }
+  return level > other.level;  // Highest level first
 }

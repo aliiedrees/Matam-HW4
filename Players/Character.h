@@ -14,7 +14,7 @@ class Responsible :public Character {
     string getType() const override;
 };
 
-class RiskMaker :public Character {
+class RiskTaker :public Character {
     string potionsMerchant(Player& player) override;
     string getType() const override;
 };
