@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
 using namespace std;
-class Player;
-
+#include "Player.h"
 class Job {
 
 public:
