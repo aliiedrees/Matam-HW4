@@ -5,8 +5,8 @@
 #include "../Players/Character.h"
 #include "../Players/Player.h"
 using namespace std;
-string Monsters::apply(Player& player) {
-    if(this->getCombatPower() >= player.getCombatPoawer()) {
+string Encounter::apply(Player& player) {
+    if(this->getCombatPower() >= player.getCombatPower()) {
         player.setHealthPoints(player.getHealthPoints() - this->getDamage());
     return getEncounterLostMessage(player,this->getDamage());
     }
@@ -24,17 +24,17 @@ string Monsters::apply(Player& player) {
     return getEncounterWonMessage(player,this->getLoot());
 }
 
-int Monsters::getLoot() const {
-    return this->Loot;
+int Encounter::getLoot() const {
+    return this->loot;
 }
 
-int Monsters::getCombatPower() const {
+int Encounter::getCombatPower() const {
 
-    return this->CombatPower;
+    return this->combatPower;
 }
 
-int Monsters::getDamage() const {
-    return this->Damage;
+int Encounter::getDamage() const {
+    return this->damage;
 }
 
 string SolarEclipse::applyEvent(Player& player) {
@@ -45,31 +45,34 @@ string PotionsMerchant::applyEvent(Player& player) {
     return player.getCharacter()->potionsMerchant(player);
 }
 
-void Pack::applyBalrogCombatPower(std::vector<std::unique_ptr<Monsters>>& monsters) {
-        for (auto& monster : monsters) {
-            // Check if it's a "Balrog" and increase its CombatPower
-            if (monster->getName() == "Balrog") {
-                monster->setCombatPowers(2);
-            }
-
-            // If it's a pack, recursively check its members
-            if (auto pack = dynamic_cast<Pack*>(monster.get())) {
-                applyBalrogCombatPower(pack->monsters);
-            }
+void Pack::applyBalrogCombatPower(std::vector<std::unique_ptr<Encounter>>& monsters) {
+    for (auto& monster : monsters) {
+        // Check if it's a "Balrog" and increase its CombatPower
+        if (monster->getName() == "Balrog") {
+            monster->setCombatPowers(2);
         }
+
+        // If it's a pack, recursively check its members
+        if (auto pack = dynamic_cast<Pack*>(monster.get())) {
+            applyBalrogCombatPower(pack->monsters);
+        }
+    }
 }
 
- string Pack::getDescription() const {
-    unsigned int totalPower = this->getCombatPower();
-    unsigned int totalLoot = this->getLoot();
-    unsigned int totalDamage = this->getDamage();
-
-    return "Pack of " + to_string(this->size) + " members (power " + to_string(totalPower) + 
-    ", loot " + to_string(totalLoot) + ", damage " + to_string(totalDamage) + ")";
+string Pack::getDescription() const {
+    return "Pack of " + to_string(this->size) + " members (power " + to_string(this->combatPower) + 
+    ", loot " + to_string(loot) + ", damage " + to_string(damage) + ")";
 }
     
 string Pack::applyEvent(Player &player) {
     std::string outcome = apply(player);
     applyBalrogCombatPower(this->monsters);
     return outcome;
+}
+
+std::unique_ptr<Pack> Pack::createPack(std::vector<std::unique_ptr<Encounter>> monsters, int size){
+    auto pack = std::make_unique<Pack>();
+    pack->monsters = std::move(monsters);
+    pack->size = size;
+    return pack;
 }

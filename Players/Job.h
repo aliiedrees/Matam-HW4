@@ -7,7 +7,7 @@ class Job {
 
 public:
     Job() = default;
-    virtual ~Job() = 0;
+    virtual ~Job() = default;
     virtual  int calculateCombatPower(const Player& player) const ;
     virtual std::string getType() const = 0;
     virtual string solarEclipse(Player& player);
@@ -19,7 +19,7 @@ class Warrior : public Job {
 public:
     Warrior() = default ;
     bool checkIfRnaged() override;
-    ~Warrior() override = default;
+    ~Warrior() = default;
      int calculateCombatPower(const Player& player) const override ;
     string solarEclipse(Player& player) override;
     std::string getType()const override ;
@@ -30,7 +30,7 @@ class Magician : public Job {
 public:
     Magician() = default;
     bool checkIfRnaged() override;
-    ~Magician() override = default;
+    ~Magician() = default;
     int calculateCombatPower(const Player& player) const override ;
     string solarEclipse(Player& player) override;
     std::string getType() const override;
@@ -43,7 +43,7 @@ class Archer : public Job {
     bool checkIfRnaged() override;
     int calculateCombatPower(const Player& player) const override ;
     string solarEclipse(Player& player) override;
-    ~Archer() override = default;
+    ~Archer() = default;
     std::string getType() const override ;
 };
 

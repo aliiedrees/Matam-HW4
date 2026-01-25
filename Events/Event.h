@@ -1,24 +1,28 @@
 #pragma once
 #include <string>
+#include <vector>
+#include <memory>
+
 using namespace std;
 class Player;
 class Event {
     protected:
     virtual string apply(Player& player);
     public:
-    virtual string getDescription() const;
+    virtual string getDescription() const = 0;
     virtual string applyEvent(Player& player) {return apply(player);}
-    static std::vector<std::unique_ptr<Event>> eventList;
 };
-class Monsters :public Event {
-    public:
-    Monsters() = default;
-    Monsters(std::string  type , int power,  int loot,  int damage)
-        :type(std::move(type)) {
-        CombatPower = power;
-        Loot = loot;
-        Damage = damage;
-    }
+class Encounter :public Event {
+protected:
+    string type;
+    int combatPower;
+    int loot;
+    int damage;
+public:
+    Encounter() = default;
+    Encounter(string  type , int power,  int loot,  int damage)
+    :type(type), combatPower(power), loot(loot), damage(damage){}
+
     virtual string apply(Player& player) ;
     virtual int getCombatPower() const;
     virtual int getLoot() const;
@@ -26,43 +30,40 @@ class Monsters :public Event {
     virtual void setCombatPowers(int plus) const;
     virtual string getName() const;
     virtual bool isPack() const {return false;}
-    string type;
-    int CombatPower;
-    int Loot;
-    int Damage;
+
 };
-class Snail : public Monsters {
+class Snail : public Encounter {
 public:
-    Snail():Monsters("Snail",5,2,10){}
+    Snail():Encounter("Snail",5,2,10){}
     string getName() const override;
     string getDescription() const override{
         return "Snail (power 5, loot 2, damage 10)";
     }
 };
-class Slime :public Monsters {
+class Slime :public Encounter {
 public:
-    Slime():Monsters("Slime",12,5,25){}
+    Slime():Encounter("Slime",12,5,25){}
     string getName() const override;
     string getDescription() const override{
         return "Slime (power 12, loot 5, damage 25)";
     }
 };
-class Barlog :public Monsters {
+class Balrog :public Encounter {
 public:
-    Barlog():Monsters("Balrog",15,100,9001){}
+    Balrog():Encounter("Balrog",15,100,9001){}
     string getName() const override;
     void setCombatPowers(int plus) const override;  
     string getDescription() const override{
-        return "Barlog (power " + to_string(CombatPower) + ", loot 100, damage 9001)";
+        return "Balrog (power " + to_string(combatPower) + ", loot 100, damage 9001)";
     } 
     string applyEvent(Player& player) override {
-        string outcome = Monsters::apply(player);
+        string outcome = Encounter::apply(player);
         this->setCombatPowers(2);
         return outcome;   
     }
 };
-class Pack :public Monsters {
-    vector<unique_ptr<Monsters>> monsters;
+class Pack :public Encounter {
+    vector<unique_ptr<Encounter>> monsters;
     int size;
 
     public:
@@ -71,17 +72,8 @@ class Pack :public Monsters {
     string applyEvent(Player& player) override;
     string getName() const override;
     bool isPack() const override {return true;};
-    void applyBalrogCombatPower(std::vector<std::unique_ptr<Monsters>>& monsters);
-    static std::unique_ptr<Pack> createPack(std::vector<std::unique_ptr<Monsters>> monsters) {
-        auto pack = std::make_unique<Pack>();
-        for (auto& monster : monsters) {
-            pack->addMonster(std::move(monster));
-        }
-        return pack;
-    }
-        void addMonster(std::unique_ptr<Monsters> monster) {
-        monsters.push_back(std::move(monster));
-    }
+    void applyBalrogCombatPower(std::vector<std::unique_ptr<Encounter>>& monsters);
+    static std::unique_ptr<Pack> createPack(std::vector<std::unique_ptr<Encounter>> monsters, int size);
 };
 class SolarEclipse:public Event {
     string applyEvent(Player& player) override;

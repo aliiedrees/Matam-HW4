@@ -186,10 +186,10 @@ MatamStory::MatamStory(std::istream& eventsStream, std::istream& playersStream) 
 
     /*===== TODO: Open and read events file =====*/
     // Check if the stream is valid before reading
-    eventFactory.readEvents(eventsStream);
+    eventFactory.loadEvents(eventsStream);
 
     // // Check if we have at least 2 events
-    if (Event::eventList.size() < 2) {
+    if (EventFactory::eventsQueue.size() < 2) {
         throw std::runtime_error("Invalid Events File");
     }
 
@@ -223,16 +223,16 @@ void MatamStory::playTurn(Player& player) {
     /**
      * Steps to implement (there may be more, depending on your design):
      * 1. Get the next event from the events list*/
-    int size = Event::eventList.size();
+    int size = EventFactory::eventsQueue.size();
     int currEventIndex = m_turnIndex % size;
-    unique_ptr<Event> currEvent = std::move(Event::eventList[currEventIndex]); // Taking ownership
+    unique_ptr<Event> currEvent = std::move(EventFactory::eventsQueue[currEventIndex]); // Taking ownership
 
      /** 2. Print the turn details with "printTurnDetails"*/
     printTurnDetails(m_turnIndex + 1 , player, *currEvent);
 
      /** 3. Play the event */
     string outcome = currEvent->applyEvent(player);
-    Event::eventList[currEventIndex] = std::move(currEvent); // Returning ownership
+    EventFactory::eventsQueue[currEventIndex] = std::move(currEvent); // Returning ownership
 
      /** 4. Print the turn outcome with "printTurnOutcome"*/
     printTurnOutcome(outcome);
