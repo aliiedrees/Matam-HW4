@@ -7,6 +7,9 @@
 using namespace std;
 string Encounter::apply(Player& player) {
     if(this->getCombatPower() >= player.getCombatPower()) {
+        if(player.getJob()->checkIfRnaged() == false) {
+            player.setHealthPoints(player.getHealthPoints() - 10);
+        }
         player.setHealthPoints(player.getHealthPoints() - this->getDamage());
         if (player.getHealthPoints() <= 0){
             player.setHealthPoints(0);
@@ -71,7 +74,6 @@ int Pack::getSize() const {
 std::unique_ptr<Pack> Pack::createPack(std::vector<std::unique_ptr<Encounter>> monsters, int size){
     auto pack = std::make_unique<Pack>();
     pack->monsters = std::move(monsters);
-    int counterMonster = 0;
     int sumLoot = 0, sumPower = 0, sumDamage = 0, balrogCounter = 0;
     for(const auto& monster : pack->monsters) {
        sumLoot += monster->getLoot();
@@ -81,8 +83,6 @@ std::unique_ptr<Pack> Pack::createPack(std::vector<std::unique_ptr<Encounter>> m
             balrogCounter++;
         }
 
-
-        counterMonster += monster->getSize();
         if(monster->getName() == "Pack") {
             auto* pack = dynamic_cast<Pack*>(monster.get());
             balrogCounter+=pack->getBalrogCounter();
@@ -93,7 +93,7 @@ std::unique_ptr<Pack> Pack::createPack(std::vector<std::unique_ptr<Encounter>> m
     pack->damage = sumDamage;
     pack->loot = sumLoot;
     pack->balrogCounter = balrogCounter;
-    pack->size = counterMonster;
+    pack->size = size;
     return pack;
 }
 void Encounter::setCombatPowers(int plus) {
