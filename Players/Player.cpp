@@ -79,3 +79,15 @@ bool Player::operator<(const Player &other) const {
   }
   return level > other.level;  // Highest level first
 }
+
+Job* Player::getJob() const{
+  return job.get();
+}
+
+Character* Player::getCharacter() const{
+  return character.get();
+}
+
+void Player::wasted(){
+  alive = false;
+}

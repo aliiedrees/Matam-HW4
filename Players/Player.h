@@ -31,8 +31,8 @@ public:
     int getCombatPower() const;
     string getDescription() const;
     string getName() const;
-    const unique_ptr<Character>& getCharacter() const;
-    const unique_ptr<Job>& getJob() const;
+    Character* getCharacter() const;
+    Job* getJob() const;
     int getLevel() const;
     void buffLevel();
     int getForce() const;

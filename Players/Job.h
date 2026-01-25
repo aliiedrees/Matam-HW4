@@ -4,14 +4,15 @@ using namespace std;
 class Player;
 
 class Job {
+protected:
+    Job() = default;
 
 public:
-    Job() = default;
     virtual ~Job() = default;
-    virtual  int calculateCombatPower(const Player& player) const ;
+    virtual  int calculateCombatPower(const Player& player) const  = 0;
     virtual std::string getType() const = 0;
-    virtual string solarEclipse(Player& player);
-    virtual bool checkIfRnaged();
+    virtual string solarEclipse(Player& player) = 0;
+    virtual bool checkIfRnaged() = 0;
 };
 
 class Warrior : public Job {

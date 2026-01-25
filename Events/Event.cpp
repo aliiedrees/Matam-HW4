@@ -8,7 +8,7 @@ using namespace std;
 string Encounter::apply(Player& player) {
     if(this->getCombatPower() >= player.getCombatPower()) {
         player.setHealthPoints(player.getHealthPoints() - this->getDamage());
-    return getEncounterLostMessage(player,this->getDamage());
+        return getEncounterLostMessage(player,this->getDamage());
     }
      {
         player.setCoins(player.getCoins() + this->getLoot());
@@ -37,11 +37,11 @@ int Encounter::getDamage() const {
     return this->damage;
 }
 
-string SolarEclipse::applyEvent(Player& player) {
+string SolarEclipse::apply(Player& player) {
     return player.getJob()->solarEclipse(player);
 }
 
-string PotionsMerchant::applyEvent(Player& player) {
+string PotionsMerchant::apply(Player& player) {
     return player.getCharacter()->potionsMerchant(player);
 }
 
@@ -75,4 +75,8 @@ std::unique_ptr<Pack> Pack::createPack(std::vector<std::unique_ptr<Encounter>> m
     pack->monsters = std::move(monsters);
     pack->size = size;
     return pack;
+}
+
+void Encounter::setCombatPowers(int plus) {
+    this->combatPower += plus;
 }
