@@ -25,7 +25,7 @@ public:
     Encounter() = default;
     Encounter(string  type , int power,  int loot,  int damage)
     :type(type), combatPower(power), loot(loot), damage(damage){}
-
+    virtual int getSize() const {return 1;}
     string apply(Player& player) override;
     int getCombatPower() const;
     int getLoot() const;
@@ -72,9 +72,11 @@ class Pack :public Encounter {
     Pack() = default;
     string getDescription() const override;
     string applyEvent(Player& player) override;
+    int getSize() const override;
     string getName() const override {return "Pack";}
     bool isPack() const override {return true;};
     void applyBalrogCombatPower(int balrogCounter);
+    int getBalrogCounter() const { return balrogCounter;}
     static std::unique_ptr<Pack> createPack(std::vector<std::unique_ptr<Encounter>> monsters, int size);
 };
 

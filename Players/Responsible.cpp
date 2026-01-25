@@ -13,7 +13,7 @@ string Responsible::potionsMerchant(Player& player) {
     int currentHP = player.getHealthPoints();
     int currentCoins = player.getCoins();
     int potionsAmmount = 0;
-    while (currentHP + 10 * potionsAmmount < 100 || potionsAmmount * 5 <= currentCoins){
+    while (currentHP + 10 * potionsAmmount < player.getMaxHealthPoints() && potionsAmmount * 5 <= currentCoins){
         potionsAmmount++;
     }
     potionsAmmount = (potionsAmmount * 5 ) > currentCoins ? potionsAmmount - 1 : potionsAmmount;

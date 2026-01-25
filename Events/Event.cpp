@@ -8,6 +8,10 @@ using namespace std;
 string Encounter::apply(Player& player) {
     if(this->getCombatPower() >= player.getCombatPower()) {
         player.setHealthPoints(player.getHealthPoints() - this->getDamage());
+        if (player.getHealthPoints() <= 0){
+            player.setHealthPoints(0);
+            player.wasted();
+        }
         return getEncounterLostMessage(player,this->getDamage());
     }
     player.setCoins(player.getCoins() + this->getLoot());
@@ -17,6 +21,7 @@ string Encounter::apply(Player& player) {
         player.setHealthPoints(player.getHealthPoints() - 10);
     }
     if (player.getHealthPoints() <= 0){
+        player.setHealthPoints(0);
         player.wasted();
     }
     return getEncounterWonMessage(player,this->getLoot());
@@ -59,29 +64,36 @@ string Pack::applyEvent(Player &player) {
     return outcome;
 }
 
+int Pack::getSize() const {
+    return this->size;
+}
+
 std::unique_ptr<Pack> Pack::createPack(std::vector<std::unique_ptr<Encounter>> monsters, int size){
     auto pack = std::make_unique<Pack>();
     pack->monsters = std::move(monsters);
-    pack->size = size;
+    int counterMonster = 0;
     int sumLoot = 0, sumPower = 0, sumDamage = 0, balrogCounter = 0;
-    for(size_t i = 0; i < pack->monsters.size(); ++i) {
-    if (i > 1000) { // Safety catch
-        std::cerr << "Loop exceeded 1000 iterations! Something is wrong." << std::endl;
-        break; 
-    }
-    auto& monster = pack->monsters[i];
-    std::cout << "Index: " << i << " | Name: " << monster->getName() << std::endl;
-        sumLoot += monster->getLoot();
+    for(const auto& monster : pack->monsters) {
+       sumLoot += monster->getLoot();
         sumDamage += monster->getDamage();
         sumPower += monster->getCombatPower();
-        if(monster->getName() == "Balrog"){
+        if(monster->getName() == "Balrog") {
             balrogCounter++;
         }
+
+
+        counterMonster += monster->getSize();
+        if(monster->getName() == "Pack") {
+            auto* pack = dynamic_cast<Pack*>(monster.get());
+            balrogCounter+=pack->getBalrogCounter();
+        }
     }
+
     pack->combatPower = sumPower;
     pack->damage = sumDamage;
     pack->loot = sumLoot;
     pack->balrogCounter = balrogCounter;
+    pack->size = counterMonster;
     return pack;
 }
 void Encounter::setCombatPowers(int plus) {

@@ -13,6 +13,9 @@ int Warrior::calculateCombatPower(const Player &player) const {
     return combatPower;
 }
 std::string Warrior::solarEclipse(Player &player) {
+    if(player.getForce() <= 0 ) {
+        return getSolarEclipseMessage(player,0);
+    }
     int effect = -1 ;
     player.setForce(effect);
     return getSolarEclipseMessage(player,effect);

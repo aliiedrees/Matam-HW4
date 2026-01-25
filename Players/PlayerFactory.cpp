@@ -14,22 +14,26 @@ PlayerFactory::PlayerFactory(){
     characterMap["Responsible"] = []() ->unique_ptr<Character> { return make_unique<Responsible>(); };
     characterMap["RiskTaking"] = []() ->unique_ptr<Character> { return make_unique<RiskTaker>(); };
 }
+bool isAlpha(string name) {
 
+    for (auto c : name) {
+        if (!(c >= 'a' && c <= 'z' )&&!(c >= 'A' && c <= 'Z')) {
+            return false;
+        }
+    }
+    return true;
+}
 void PlayerFactory::loadPlayers(std::istream& playersStream) {
     string name, job, character;
     PlayerFactory playerFactory;
 
     while (playersStream >> name >> job >> character) {
         // Check if name length is valid
-        if (name.size() < 3 || name.size() > 15) {
-            throw runtime_error("Invalid Players File 1");
+        if(name.empty() || !isAlpha(name)|| jobMap.find(job) == jobMap.end() || characterMap.find(character) == characterMap.end()) {
+            throw runtime_error("Invalid Players File");
         }
-
-        for (char ch : name) {
-            if (!((65 <= ch && ch <= 90) || ( 97 <= ch && ch <= 122))) {
-                // Check if every character is a letter
-                throw runtime_error("Invalid Players File 2");
-            }
+        if (name.size() < 3 || name.size() > 15) {
+            throw runtime_error("Invalid Players File");
         }
 
         // Attempt to create a player using the players factory
@@ -39,24 +43,22 @@ void PlayerFactory::loadPlayers(std::istream& playersStream) {
         } catch (const runtime_error& e) {
             throw runtime_error(e);
         }
-
-        // Check if the input stream ended in the middle of a player entry
-        if (!playersStream.eof() && (playersStream.fail() || playersStream.bad())) {
-            throw runtime_error("Invalid Players File 4");
-        }
+    }
+    if (playersQueue.size() < 2 || playersQueue.size() > 6) {
+        throw std::runtime_error("Invalid Players File");
     }
 }
 
 unique_ptr<Player> PlayerFactory::createPlayer(const string& name, const string& job, const string& character) {
     auto jobIt = jobMap.find(job);
     if (jobIt == jobMap.end()) {
-        throw std::runtime_error("Invalid Players File. 5");
+        throw std::runtime_error("Invalid Players File");
     }
 
         // Check if the character exists
     auto characterIt = characterMap.find(character);
     if (characterIt == characterMap.end()) {
-        throw std::runtime_error("Invalid Players File. 6");
+        throw std::runtime_error("Invalid Players File");
     }
        // Create the job and the character
     auto jobPtr = jobIt->second();
@@ -65,3 +67,4 @@ unique_ptr<Player> PlayerFactory::createPlayer(const string& name, const string&
         // Create the player with the generate job and character
     return make_unique<Player>(name, std::move(jobPtr), std::move(characterPtr));
 }
+

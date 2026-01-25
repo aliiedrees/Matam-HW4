@@ -42,6 +42,9 @@ return this->force;
 }
 void Player::setForce(int force) {
  this->force = this->force + force;
+    if (this->force <= 0) {
+        this->force = 0;
+    }
 }
 int Player::getHealthPoints() const {
 return this->currentHp;
