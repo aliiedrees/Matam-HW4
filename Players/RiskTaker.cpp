@@ -7,7 +7,7 @@
 using std::string;
 class player;
 string RiskTaker::getType() const {
-    return "RiskTaker";
+    return "RiskTaking";
 }
 
 string RiskTaker::potionsMerchant(Player& player) {

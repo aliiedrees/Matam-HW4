@@ -223,6 +223,7 @@ void MatamStory::playTurn(Player& player) {
     /**
      * Steps to implement (there may be more, depending on your design):
      * 1. Get the next event from the events list*/
+    if(player.isAlive()){
     int size = EventFactory::eventsQueue.size();
     int currEventIndex = m_turnIndex % size;
     unique_ptr<Event> currEvent = std::move(EventFactory::eventsQueue[currEventIndex]); // Taking ownership
@@ -236,6 +237,7 @@ void MatamStory::playTurn(Player& player) {
 
      /** 4. Print the turn outcome with "printTurnOutcome"*/
     printTurnOutcome(outcome);
+    }
     m_turnIndex++;
 }
 

@@ -14,6 +14,7 @@ class Event {
     virtual string applyEvent(Player& player) {return apply(player);}
     virtual ~Event() = default;
 };
+
 class Encounter :public Event {
 protected:
     string type;
@@ -26,9 +27,9 @@ public:
     :type(type), combatPower(power), loot(loot), damage(damage){}
 
     string apply(Player& player) override;
-    virtual int getCombatPower() const;
-    virtual int getLoot() const;
-    virtual int getDamage() const;
+    int getCombatPower() const;
+    int getLoot() const;
+    int getDamage() const;
     void setCombatPowers(int plus);
     virtual string getName() const = 0;
     virtual bool isPack() const {return false;}
@@ -66,14 +67,14 @@ public:
 class Pack :public Encounter {
     vector<unique_ptr<Encounter>> monsters;
     int size;
-
+    int balrogCounter = 0;
     public:
     Pack() = default;
     string getDescription() const override;
     string applyEvent(Player& player) override;
     string getName() const override {return "Pack";}
     bool isPack() const override {return true;};
-    void applyBalrogCombatPower(std::vector<std::unique_ptr<Encounter>>& monsters);
+    void applyBalrogCombatPower(int balrogCounter);
     static std::unique_ptr<Pack> createPack(std::vector<std::unique_ptr<Encounter>> monsters, int size);
 };
 

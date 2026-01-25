@@ -18,9 +18,13 @@ Player::Player(const string name, unique_ptr<Job> job, unique_ptr<Character> cha
 }
 
 string Player::getDescription() const {
- string description = this->name  + "," + this->job->getType() + "with" + this->character->getType() +
- "( level" + to_string(this->level) + ", force" + to_string(this->force) + " )";
+ string description = this->name  + ", " + this->job->getType() + " with " + this->character->getType() +
+ " character (level " + to_string(this->level) + ", force " + to_string(this->force) + ")";
   return description;
+}
+
+bool Player::isAlive() const{
+  return alive;
 }
 
 string Player::getName() const {
@@ -90,4 +94,5 @@ Character* Player::getCharacter() const{
 
 void Player::wasted(){
   alive = false;
+  this->currentHp = 0;
 }

@@ -30,7 +30,7 @@ std::unique_ptr<Pack> EventFactory::createPack(std::istream& eventsStream) {
         } else {
             std::unique_ptr<Event> event = createEvent(eventName);
             Encounter* rawMonsterPtr = dynamic_cast<Encounter*>(event.get());
-
+            
             if (rawMonsterPtr) {
             event.release(); 
 

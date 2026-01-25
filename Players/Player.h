@@ -44,7 +44,7 @@ public:
     void setForce(int force);
     void setHealthPoints(int newHealthPoints);
     void setCoins(int newCoins);
-
+    bool isAlive() const;
     bool operator<(const Player &other) const;
 
 };
