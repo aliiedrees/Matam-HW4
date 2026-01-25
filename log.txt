@@ -1,0 +1,296 @@
+* commit 2b444c124b0eb25cd62c3bfc779b775c060ee95b
+| Author: abdelhadi <kiwanabed02@gmail.com>
+| Date:   Sun Jan 25 15:50:17 2026 +0200
+| 
+|     all good
+| 
+|  .gitmodules               |   6 +
+|  Events/Event.cpp          |  32 ++--
+|  Events/Event.h            |   4 +-
+|  MatamGenericTester        |   1 +
+|  MatamStoryTest            | Bin 1745856 -> 1747760 bytes
+|  Players/Archer.cpp        |   3 +
+|  Players/Player.cpp        |   3 +
+|  Players/PlayerFactory.cpp |  35 +++--
+|  Players/Responsible.cpp   |   2 +-
+|  Players/Warrior.cpp       |   3 +
+|  TechnionMatam             |   1 +
+|  test_results.html         | 359 +++++++++++---------------------------------
+|  12 files changed, 148 insertions(+), 301 deletions(-)
+| 
+* commit 7fdd254183c599a2b5dc7e232181012fc8bc5a8a
+| Author: abdelhadi <kiwanabed02@gmail.com>
+| Date:   Sun Jan 25 12:56:55 2026 +0200
+| 
+|     DELETE TESTER
+| 
+|  .gitmodules                |   6 -
+|  .idea/editor.xml           | 478 +++++++++++++++++------------------
+|  Events/.idea/Events.iml    |   8 +
+|  Events/.idea/editor.xml    | 580 +++++++++++++++++++++++++++++++++++++++++++
+|  Events/.idea/modules.xml   |   8 +
+|  Events/.idea/vcs.xml       |   6 +
+|  Events/.idea/workspace.xml |  60 +++++
+|  MatamGenericTester         |   1 -
+|  TechnionMatam              |   1 -
+|  9 files changed, 901 insertions(+), 247 deletions(-)
+| 
+* commit f69f57457b08839d03ef6a47c21f5a76a4bbf568
+| Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+| Date:   Sun Jan 25 12:52:52 2026 +0200
+| 
+|     debugging
+| 
+|  .gitmodules               |   6 +
+|  .vscode/tasks.json        |  28 ++
+|  Events/Event.cpp          |  54 +--
+|  Events/Event.h            |  11 +-
+|  Events/EventFactory.cpp   |   2 +-
+|  MatamGenericTester        |   1 +
+|  MatamStory.cpp            |   2 +
+|  MatamStoryTest            | Bin 0 -> 1745856 bytes
+|  Players/Player.cpp        |   9 +-
+|  Players/Player.h          |   2 +-
+|  Players/PlayerFactory.cpp |  16 +-
+|  Players/RiskTaker.cpp     |   2 +-
+|  TechnionMatam             |   1 +
+|  test_results.html         | 863 ++++++++++++++++++++++++++++++++++++++++++++
+|  14 files changed, 956 insertions(+), 41 deletions(-)
+| 
+* commit f42f1bfd27d65c1c72c664004cc4046bdd63946e
+| Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+| Date:   Sun Jan 25 10:27:51 2026 +0200
+| 
+|     pass compilation
+| 
+|  Events/Event.cpp    |  10 +++++++---
+|  Events/Event.h      |  25 ++++++++++++++-----------
+|  MatamStory          | Bin 0 -> 405336 bytes
+|  Players/Character.h |  17 ++++++++++++++---
+|  Players/Job.h       |   9 +++++----
+|  Players/Player.cpp  |  12 ++++++++++++
+|  Players/Player.h    |   4 ++--
+|  7 files changed, 54 insertions(+), 23 deletions(-)
+| 
+* commit da1abf3fc9e365dc58e7acf8cb07d1034a046b91
+| Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+| Date:   Sun Jan 25 09:19:47 2026 +0200
+| 
+|     passed compilation Events and matamstory| missing some methods
+| 
+|  Events/Event.cpp        | 55 +++++++++++++++++++------------------
+|  Events/Event.h          | 64 +++++++++++++++++++------------------------
+|  Events/EventFactory.cpp | 68 +++++++++++++++++++++++++++++++++++++++++++++
+|  Events/EventFactory.h   | 70 ++++-------------------------------------------
+|  MatamStory.cpp          | 10 +++----
+|  Players/Job.h           |  8 +++---
+|  6 files changed, 140 insertions(+), 135 deletions(-)
+| 
+* commit 0145ed77ba378e30fed2da70303b0154fbfe4bea
+| Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+| Date:   Sun Jan 18 20:03:22 2026 +0200
+| 
+|     deal with warnings in Player file
+| 
+|  MatamStory.cpp                           |  32 +++---
+|  MatamStory.h                             |   2 +-
+|  Players/Character.h                      |   2 +-
+|  Players/Player.cpp                       |  61 ++++++-----
+|  Players/Player.h                         | 164 ++++++++---------------------
+|  Players/PlayerFactory.cpp                |  82 ++++++++++-----
+|  Players/{RiskMaker.cpp => RiskTaker.cpp} |  45 ++++----
+|  7 files changed, 174 insertions(+), 214 deletions(-)
+|   
+| * commit cf844261e1a87be77f0d654ef510eefeca692eec
+| | Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+| | Date:   Sun Jan 18 17:06:00 2026 +0200
+| | 
+| |     got major error
+| | 
+| |  Players/Character.h |  3 ++-
+| |  Players/Player.cpp  | 26 +++++++++++++-------------
+| |  Players/Player.h    | 20 ++++++++++----------
+| |  3 files changed, 25 insertions(+), 24 deletions(-)
+| | 
+| * commit 0b9df37ef6663aad604a5a8c73a286b61aa8dc7a
+|/  Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+|   Date:   Sun Jan 18 17:05:11 2026 +0200
+|   
+|       got major error
+|   
+|    .vscode/tasks.json        |  28 ++++++++
+|    Players/Job.h             |   3 +-
+|    Players/Player.h          | 161 ++++++++++--------------------------------
+|    Players/PlayerFactory.cpp |  60 ++++++++--------
+|    4 files changed, 98 insertions(+), 154 deletions(-)
+| 
+* commit afbe5815067849854ac4fb40ced5b61c833f8ace
+| Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+| Date:   Fri Jan 16 19:23:05 2026 +0200
+| 
+|     mtt
+| 
+|  Events/Event.cpp          | 171 +++++++++++++-------------------------------
+|  Events/Event.h            | 161 ++++++++++++++---------------------------
+|  Events/EventFactory.h     |  79 ++++++++++++++++++++
+|  MatamStory.cpp            | 135 ++++++++++++++++++++++++++++------
+|  MatamStory.h              |  21 ++++--
+|  Players/Behavior.cpp      |   3 -
+|  Players/Behavior.h        |   8 ---
+|  Players/Character.cpp     |   0
+|  Players/Character.h       |  10 +--
+|  Players/Job.cpp           |   0
+|  Players/Player.cpp        |  12 ++--
+|  Players/Player.h          | 100 +++++++++++++++++++++-----
+|  Players/PlayerFactory.cpp |  58 +++++++--------
+|  Players/Responsable.cpp   |  24 -------
+|  Players/Responsible.cpp   |  23 ++++++
+|  Players/RiskMaker.cpp     |  14 ++--
+|  Players/archer.cpp        |  22 ------
+|  Players/magician.cpp      |  22 ------
+|  Players/warrior.cpp       |  22 ------
+|  19 files changed, 463 insertions(+), 422 deletions(-)
+| 
+* commit 2a31e4b2e8cf9ecf0a027157b318a3593e4a54b0
+| Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+| Date:   Fri Jan 16 14:46:00 2026 +0200
+| 
+|     class Job fix
+| 
+|  Players/Archer.cpp   | 22 ++++++++++++++++++++++
+|  Players/Job.h        | 26 ++++++++++++++++----------
+|  Players/Magician.cpp | 26 ++++++++++++++++++++++++++
+|  Players/Warrior.cpp  | 22 ++++++++++++++++++++++
+|  4 files changed, 86 insertions(+), 10 deletions(-)
+| 
+* commit 33453fda42ec1335e87199fd35fffbbc3c80c9d9
+| Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+| Date:   Fri Jan 16 04:54:43 2026 +0200
+| 
+|     checkpoint for Ali Events is supposed to be done
+| 
+|  Events/Event.cpp | 117 ++++++++++++++++++++++++++++++++------
+|  Events/Event.h   |  33 +++++------
+|  MatamStory.cpp   | 161 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+|  MatamStory.h     |  18 +++++-
+|  4 files changed, 288 insertions(+), 41 deletions(-)
+| 
+* commit 61b52113fe4760fbc10f3accfdac9f677dd7f14d
+| Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+| Date:   Fri Jan 16 04:53:19 2026 +0200
+| 
+|     delete unused files
+| 
+|  Events/Monsters.cpp |  1 -
+|  Events/Pack.cpp     | 21 ---------------------
+|  2 files changed, 22 deletions(-)
+|   
+*   commit 9e3a66d074ab8ce2a61d065463dd533d0cb72914
+|\  Merge: 5ef0fd4 0646fa3
+| | Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+| | Date:   Thu Jan 15 20:19:51 2026 +0200
+| | 
+| |     merge fix
+| | 
+| * commit 0646fa3aaeda5b2fe0717724e2581ea9b8e1e17a
+| | Author: abdelhadi <kiwanabed02@gmail.com>
+| | Date:   Tue Jan 13 13:33:56 2026 +0200
+| | 
+| |     player + evnet without the input part
+| | 
+| |  .idea/.gitignore          |   8 +
+| |  .idea/.name               |   1 +
+| |  .idea/Matam-HW4.iml       |   2 +
+| |  .idea/editor.xml          | 580 ++++++++++++++++++++++++++++++++++++++++++
+| |  .idea/misc.xml            |   7 +
+| |  .idea/modules.xml         |   8 +
+| |  .idea/vcs.xml             |   6 +
+| |  Events/Event.cpp          |  65 +++++
+| |  Events/Event.h            |  65 ++++-
+| |  Events/Monsters.cpp       |   1 +
+| |  Players/Behavior.cpp      |   3 +
+| |  Players/Behavior.h        |   8 +
+| |  Players/Character.cpp     |   0
+| |  Players/Character.h       |  20 ++
+| |  Players/Job.cpp           |   0
+| |  Players/Job.h             |  43 ++++
+| |  Players/Player.cpp        |  70 +++++
+| |  Players/Player.h          |  52 +++-
+| |  Players/PlayerFactory.cpp |  35 +++
+| |  Players/Responsable.cpp   |  24 ++
+| |  Players/RiskMaker.cpp     |  22 ++
+| |  Players/archer.cpp        |  22 ++
+| |  Players/magician.cpp      |  22 ++
+| |  Players/warrior.cpp       |  22 ++
+| |  24 files changed, 1064 insertions(+), 22 deletions(-)
+| | 
+* | commit 5ef0fd4acad5e3af1900cd833a38aa05e74ccaef
+| | Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+| | Date:   Thu Jan 15 20:15:42 2026 +0200
+| | 
+| |     fix syntax in events
+| | 
+| |  Events/Event.h | 25 +++++++++++++------------
+| |  1 file changed, 13 insertions(+), 12 deletions(-)
+| | 
+* | commit 26e6517ae7ee4fbd5e2e9f9c79fad7915b00aecf
+|/  Author: Ali Edrees <ali.edrees@campus.technion.ac.il>
+|   Date:   Tue Jan 13 10:10:20 2026 +0200
+|   
+|       checkpoint for ali | work on event.h and its derived classes
+|   
+|    Events/Event.h  | 90 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+|    Events/Pack.cpp | 21 +++++++++++++
+|    2 files changed, 109 insertions(+), 2 deletions(-)
+| 
+* commit 7c2a4e3d574a6cebcd639c66ab12aeca46a7e54c
+| Author: abdelhadi <kiwanabed02@gmail.com>
+| Date:   Mon Jan 12 11:54:20 2026 +0200
+| 
+|     add gitigonore
+| 
+|  .gitignore | 2 ++
+|  1 file changed, 2 insertions(+)
+| 
+* commit 21341746c2a8b86e1694583f812a97187c17d7ad
+| Author: EgbariaMohammad <agbariya@campus.technion.ac.il>
+| Date:   Sat Jan 10 20:33:29 2026 +0200
+| 
+|     updated course number in README
+| 
+|  README.md | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+| 
+* commit 11db499619ae45b95224312022c5e0459653edcd
+| Author: Egbaria Mohammad-Baraa <102754795+EgbariaMohammad@users.noreply.github.com>
+| Date:   Wed Jan 8 19:48:30 2025 +0200
+| 
+|     Update README.md
+| 
+|  README.md | 4 ++--
+|  1 file changed, 2 insertions(+), 2 deletions(-)
+| 
+* commit 89b5f6299cabd5cfeb30a0873786055da6280436
+  Author: Yinon Goldshtein <yinongold@gmail.com>
+  Date:   Tue Jan 7 01:02:53 2025 +0200
+  
+      initial commit
+  
+   Events/Event.h       |  14 +++++
+   MatamStory.cpp       |  74 +++++++++++++++++++++++++
+   MatamStory.h         |  55 +++++++++++++++++++
+   Players/Player.h     |  51 +++++++++++++++++
+   README.md            |   7 +++
+   Utilities.cpp        | 117 +++++++++++++++++++++++++++++++++++++++
+   Utilities.h          | 146 +++++++++++++++++++++++++++++++++++++++++++++++++
+   main.cpp             |  40 ++++++++++++++
+   tests/test1.events   |   5 ++
+   tests/test1.expected |  96 ++++++++++++++++++++++++++++++++
+   tests/test1.players  |   3 +
+   tests/test2.events   |   4 ++
+   tests/test2.expected |   1 +
+   tests/test2.players  |   3 +
+   tests/test3.events   |   5 ++
+   tests/test3.expected |   1 +
+   tests/test3.players  |   2 +
+   17 files changed, 624 insertions(+)
